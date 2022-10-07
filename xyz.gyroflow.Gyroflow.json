@@ -3,11 +3,6 @@
   "runtime": "org.kde.Platform",
   "runtime-version": "5.15-22.08",
   "sdk": "org.kde.Sdk",
-  "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm14",
-    "org.freedesktop.Sdk.Extension.gcc8"
-  ],
   "command": "Gyroflow",
   "separate-locales": false,
   "finish-args": [
@@ -16,11 +11,6 @@
     "--socket=pulseaudio",
     "--share=network"
   ],
-  "build-options": {
-    "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm14/bin:/usr/lib/sdk/gcc8/bin",
-    "prepend-ld-library-path": "/usr/lib/sdk/llvm14/lib:/usr/lib/sdk/gcc8/lib",
-    "prepend-path": "/usr/lib/sdk/llvm14/bin:/usr/lib/sdk/gcc8/bin"
-  },
   "modules": [
     {
       "name": "Gyroflow",
