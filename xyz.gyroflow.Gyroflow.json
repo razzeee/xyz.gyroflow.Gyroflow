@@ -1,0 +1,63 @@
+{
+  "app-id": "xyz.gyroflow.Gyroflow",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15-22.08",
+  "sdk": "org.kde.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.rust-stable",
+    "org.freedesktop.Sdk.Extension.llvm14",
+    "org.freedesktop.Sdk.Extension.gcc8"
+  ],
+  "command": "Gyroflow",
+  "separate-locales": false,
+  "finish-args": [
+    "--share=ipc",
+    "--socket=x11",
+    "--socket=pulseaudio",
+    "--share=network"
+  ],
+  "build-options": {
+    "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm14/bin:/usr/lib/sdk/gcc8/bin",
+    "prepend-ld-library-path": "/usr/lib/sdk/llvm14/lib:/usr/lib/sdk/gcc8/lib",
+    "prepend-path": "/usr/lib/sdk/llvm14/bin:/usr/lib/sdk/gcc8/bin"
+  },
+  "modules": [
+    {
+      "name": "Gyroflow",
+      "buildsystem": "simple",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/gyroflow/gyroflow/releases/download/v1.2.0/Gyroflow-linux64.tar.gz",
+          "sha256": "7f01dc4c8ff110bde6726eb7b46f28f3564310d4f12fb903b14ad5058504f411",
+          "dest": "Gyroflow",
+          "x-checker-data": {
+            "type": "anitya",
+            "project-id": 295023,
+            "url-template": "https://github.com/gyroflow/gyroflow/releases/download/$version/Gyroflow-linux64.tar.gz",
+            "is-main-source": true
+          }
+        },
+        {
+          "type": "file",
+          "path": "xyz.gyroflow.Gyroflow.desktop"
+        },
+        {
+          "type": "file",
+          "path": "xyz.gyroflow.Gyroflow.appdata.xml"
+        },
+        {
+          "type": "file",
+          "path": "icon.png"
+        }
+      ],
+      "build-commands": [
+        "cp -r Gyroflow/* ${FLATPAK_DEST}",
+        "install -Dm755 Gyroflow/gyroflow /app/bin/Gyroflow",
+        "install -Dm644 icon.png /app/share/icons/hicolor/512x512/apps/xyz.gyroflow.Gyroflow.png",
+        "install -Dm644 xyz.gyroflow.Gyroflow.desktop /app/share/applications/xyz.gyroflow.Gyroflow.desktop",
+        "install -Dm644 xyz.gyroflow.Gyroflow.appdata.xml /app/share/metainfo/xyz.gyroflow.Gyroflow.metainfo.xml"
+      ]
+    }
+  ]
+}

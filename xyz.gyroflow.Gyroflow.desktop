@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Gyroflow
+Comment=Crossplatform configuration tool for the Betaflight flight control system
+Exec=gyroflow
+Icon=xyz.gyroflow.Gyroflow
+Categories=Utility;HardwareSettings;
