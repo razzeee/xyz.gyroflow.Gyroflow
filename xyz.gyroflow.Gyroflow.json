@@ -1,8 +1,12 @@
 {
   "app-id": "xyz.gyroflow.Gyroflow",
   "runtime": "org.kde.Platform",
-  "runtime-version": "5.15-22.08",
+  "runtime-version": "6.3",
   "sdk": "org.kde.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.rust-stable",
+    "org.freedesktop.Sdk.Extension.llvm14"
+  ],
   "command": "Gyroflow",
   "separate-locales": false,
   "finish-args": [
@@ -11,22 +15,39 @@
     "--socket=pulseaudio",
     "--share=network"
   ],
+  "build-options": {
+    "env": [
+      {
+        "CARGO_HOME": "/run/build/gyroflow/cargo"
+      }
+    ],
+    "append-path": "/usr/lib/sdk/rust-stable/bin",
+    "prepend-path": "/usr/lib/sdk/llvm14/bin",
+    "prepend-ld-library-path": "/usr/lib/sdk/llvm14/lib",
+    "build-args": [
+      "--share=network"
+    ]
+  },
   "modules": [
+    {
+      "name": "opencv",
+      "buildsystem": "cmake",
+      "builddir": "true",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/opencv/opencv/archive/4.5.5.zip",
+          "sha256": "fb16b734db3a28e5119d513bd7c61ef417edf3756165dc6259519bb9d23d04e2"
+        }
+      ]
+    },
     {
       "name": "Gyroflow",
       "buildsystem": "simple",
       "sources": [
         {
-          "type": "archive",
-          "url": "https://github.com/gyroflow/gyroflow/releases/download/v1.2.0/Gyroflow-linux64.tar.gz",
-          "sha256": "7f01dc4c8ff110bde6726eb7b46f28f3564310d4f12fb903b14ad5058504f411",
-          "dest": "Gyroflow",
-          "x-checker-data": {
-            "type": "anitya",
-            "project-id": 295023,
-            "url-template": "https://github.com/gyroflow/gyroflow/releases/download/$version/Gyroflow-linux64.tar.gz",
-            "is-main-source": true
-          }
+          "type": "git",
+          "url": "https://github.com/gyroflow/gyroflow"
         },
         {
           "type": "file",
@@ -42,8 +63,8 @@
         }
       ],
       "build-commands": [
-        "cp -r Gyroflow/* ${FLATPAK_DEST}",
-        "install -Dm755 Gyroflow/gyroflow /app/bin/Gyroflow",
+        "cargo build --release --offline",
+        "install -Dm755 target/release/Gyroflow -t /app/bin",
         "install -Dm644 icon.png /app/share/icons/hicolor/512x512/apps/xyz.gyroflow.Gyroflow.png",
         "install -Dm644 xyz.gyroflow.Gyroflow.desktop /app/share/applications/xyz.gyroflow.Gyroflow.desktop",
         "install -Dm644 xyz.gyroflow.Gyroflow.appdata.xml /app/share/metainfo/xyz.gyroflow.Gyroflow.metainfo.xml"
