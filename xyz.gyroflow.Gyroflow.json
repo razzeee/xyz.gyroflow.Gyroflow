@@ -1,7 +1,7 @@
 {
   "app-id": "xyz.gyroflow.Gyroflow",
   "runtime": "org.kde.Platform",
-  "runtime-version": "6.3",
+  "runtime-version": "5.15-22.08",
   "sdk": "org.kde.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.rust-stable",
@@ -16,11 +16,6 @@
     "--share=network"
   ],
   "build-options": {
-    "env": [
-      {
-        "CARGO_HOME": "/run/build/gyroflow/cargo"
-      }
-    ],
     "append-path": "/usr/lib/sdk/rust-stable/bin",
     "prepend-path": "/usr/lib/sdk/llvm14/bin",
     "prepend-ld-library-path": "/usr/lib/sdk/llvm14/lib",
@@ -30,9 +25,128 @@
   },
   "modules": [
     {
+      "name": "ffmpeg",
+      "config-opts": [
+        "--disable-static",
+        "--enable-shared",
+        "--enable-pic",
+        "--disable-avdevice",
+        "--disable-postproc",
+        "--disable-swscale",
+        "--disable-programs",
+        "--disable-ffplay",
+        "--disable-ffprobe",
+        "--disable-ffmpeg",
+        "--disable-encoder=flac",
+        "--disable-protocols",
+        "--disable-devices",
+        "--disable-network",
+        "--disable-hwaccels",
+        "--disable-dxva2",
+        "--disable-vdpau",
+        "--disable-filters",
+        "--enable-filter=yadif",
+        "--disable-doc",
+        "--disable-d3d11va",
+        "--disable-dxva2",
+        "--disable-audiotoolbox",
+        "--disable-videotoolbox",
+        "--disable-vaapi",
+        "--disable-crystalhd",
+        "--disable-mediacodec",
+        "--disable-nvenc",
+        "--disable-mmal",
+        "--disable-omx",
+        "--disable-omx-rpi",
+        "--disable-cuda",
+        "--disable-cuvid",
+        "--disable-libmfx",
+        "--disable-libnpp",
+        "--disable-iconv",
+        "--disable-jni",
+        "--disable-v4l2_m2m",
+        "--enable-gpl",
+        "--enable-optimizations"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/FFmpeg/FFmpeg.git",
+          "tag": "n5.1.1",
+          "commit": "1bad30dbe34f2d100b43e8f773d3fe0b5eb23523"
+        }
+      ]
+    },
+    {
       "name": "opencv",
       "buildsystem": "cmake",
-      "builddir": "true",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DOPENCV_GENERATE_PKGCONFIG=1",
+        "-DWITH_LAPACK=OFF",
+        "-DBUILD_PERF_TESTS=OFF",
+        "-DBUILD_TESTS=OFF",
+        "-DBUILD_opencv_alphamat=OFF",
+        "-DBUILD_opencv_aruco=OFF",
+        "-DBUILD_opencv_bgsegm=ON",
+        "-DBUILD_opencv_bioinspired=OFF",
+        "-DBUILD_opencv_ccalib=OFF",
+        "-DBUILD_opencv_cnn_3dobj=OFF",
+        "-DBUILD_opencv_cudaarithm=OFF",
+        "-DBUILD_opencv_cudabgsegm=OFF",
+        "-DBUILD_opencv_cudacodec=OFF",
+        "-DBUILD_opencv_cudafeatures2d=OFF",
+        "-DBUILD_opencv_cudafilters=OFF",
+        "-DBUILD_opencv_cudaimgproc=OFF",
+        "-DBUILD_opencv_cudalegacy=OFF",
+        "-DBUILD_opencv_cudaobjdetect=OFF",
+        "-DBUILD_opencv_cudaoptflow=OFF",
+        "-DBUILD_opencv_cudastereo=OFF",
+        "-DBUILD_opencv_cudawarping=OFF",
+        "-DBUILD_opencv_cudev=OFF",
+        "-DBUILD_opencv_cvv=OFF",
+        "-DBUILD_opencv_datasets=OFF",
+        "-DBUILD_opencv_dnn_objdetect=OFF",
+        "-DBUILD_opencv_dnns_easily_fooled=OFF",
+        "-DBUILD_opencv_dnn_superres=OFF",
+        "-DBUILD_opencv_dpm=OFF",
+        "-DBUILD_opencv_face=OFF",
+        "-DBUILD_opencv_freetype=OFF",
+        "-DBUILD_opencv_fuzzy=OFF",
+        "-DBUILD_opencv_hdf=OFF",
+        "-DBUILD_opencv_hfs=OFF",
+        "-DBUILD_opencv_img_hash=OFF",
+        "-DBUILD_opencv_intensity_transform=OFF",
+        "-DBUILD_opencv_line_descriptor=OFF",
+        "-DBUILD_opencv_matlab=OFF",
+        "-DBUILD_opencv_optflow=OFF",
+        "-DBUILD_opencv_ovis=OFF",
+        "-DBUILD_opencv_phase_unwrapping=OFF",
+        "-DBUILD_opencv_plot=ON",
+        "-DBUILD_opencv_quality=OFF",
+        "-DBUILD_opencv_rapid=OFF",
+        "-DBUILD_opencv_reg=OFF",
+        "-DBUILD_opencv_rgbd=OFF",
+        "-DBUILD_opencv_saliency=OFF",
+        "-DBUILD_opencv_sfm=OFF",
+        "-DBUILD_opencv_shape=OFF",
+        "-DBUILD_opencv_stereo=OFF",
+        "-DBUILD_opencv_structured_light=OFF",
+        "-DBUILD_opencv_superres=OFF",
+        "-DBUILD_opencv_surface_matching=OFF",
+        "-DBUILD_opencv_text=OFF",
+        "-DBUILD_opencv_tracking=ON",
+        "-DBUILD_opencv_videostab=OFF",
+        "-DBUILD_opencv_viz=OFF",
+        "-DBUILD_opencv_xfeatures2d=OFF",
+        "-DBUILD_opencv_ximgproc=OFF",
+        "-DBUILD_opencv_xobjdetect=OFF",
+        "-DBUILD_opencv_xphoto=OFF"
+      ],
+      "cleanup": [
+        "/bin"
+      ],
       "sources": [
         {
           "type": "archive",
@@ -42,12 +156,14 @@
       ]
     },
     {
-      "name": "Gyroflow",
+      "name": "gyroflow",
       "buildsystem": "simple",
       "sources": [
         {
           "type": "git",
-          "url": "https://github.com/gyroflow/gyroflow"
+          "url": "https://github.com/gyroflow/gyroflow",
+          "tag": "v1.2.0",
+          "commit": "1804dc26be19304672ab51de53fbec2482529e2e"
         },
         {
           "type": "file",
@@ -60,10 +176,17 @@
         {
           "type": "file",
           "path": "icon.png"
-        }
+        },
+        "cargo-sources.json"
       ],
+      "build-options": {
+        "env": {
+          "CARGO_HOME": "/run/build/gyroflow/cargo"
+        }
+      },
       "build-commands": [
-        "cargo build --release --offline",
+        "cargo --offline fetch --manifest-path Cargo.toml --verbose",
+        "cargo --offline build --release --verbose",
         "install -Dm755 target/release/Gyroflow -t /app/bin",
         "install -Dm644 icon.png /app/share/icons/hicolor/512x512/apps/xyz.gyroflow.Gyroflow.png",
         "install -Dm644 xyz.gyroflow.Gyroflow.desktop /app/share/applications/xyz.gyroflow.Gyroflow.desktop",
