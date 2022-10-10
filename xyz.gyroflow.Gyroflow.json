@@ -15,6 +15,15 @@
     "--socket=pulseaudio",
     "--share=network"
   ],
+  "add-extensions": {
+    "org.freedesktop.Platform.ffmpeg-full": {
+      "directory": "lib/ffmpeg",
+      "add-ld-path": ".",
+      "version": "22.08",
+      "autodownload": true,
+      "autodelete": false
+    }
+  },
   "build-options": {
     "append-path": "/usr/lib/sdk/rust-stable/bin",
     "prepend-path": "/usr/lib/sdk/llvm14/bin",
@@ -24,59 +33,6 @@
     ]
   },
   "modules": [
-    {
-      "name": "ffmpeg",
-      "config-opts": [
-        "--disable-static",
-        "--enable-shared",
-        "--enable-pic",
-        "--disable-avdevice",
-        "--disable-postproc",
-        "--disable-swscale",
-        "--disable-programs",
-        "--disable-ffplay",
-        "--disable-ffprobe",
-        "--disable-ffmpeg",
-        "--disable-encoder=flac",
-        "--disable-protocols",
-        "--disable-devices",
-        "--disable-network",
-        "--disable-hwaccels",
-        "--disable-dxva2",
-        "--disable-vdpau",
-        "--disable-filters",
-        "--enable-filter=yadif",
-        "--disable-doc",
-        "--disable-d3d11va",
-        "--disable-dxva2",
-        "--disable-audiotoolbox",
-        "--disable-videotoolbox",
-        "--disable-vaapi",
-        "--disable-crystalhd",
-        "--disable-mediacodec",
-        "--disable-nvenc",
-        "--disable-mmal",
-        "--disable-omx",
-        "--disable-omx-rpi",
-        "--disable-cuda",
-        "--disable-cuvid",
-        "--disable-libmfx",
-        "--disable-libnpp",
-        "--disable-iconv",
-        "--disable-jni",
-        "--disable-v4l2_m2m",
-        "--enable-gpl",
-        "--enable-optimizations"
-      ],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/FFmpeg/FFmpeg.git",
-          "tag": "n5.1.1",
-          "commit": "1bad30dbe34f2d100b43e8f773d3fe0b5eb23523"
-        }
-      ]
-    },
     {
       "name": "opencv",
       "buildsystem": "cmake",
@@ -150,8 +106,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/opencv/opencv/archive/4.5.5.zip",
-          "sha256": "fb16b734db3a28e5119d513bd7c61ef417edf3756165dc6259519bb9d23d04e2"
+          "url": "https://github.com/opencv/opencv/archive/refs/tags/4.6.0.tar.gz",
+          "sha256": "1ec1cba65f9f20fe5a41fda1586e01c70ea0c9a6d7b67c9e13edf0cfe2239277"
         }
       ]
     },
