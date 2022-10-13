@@ -134,7 +134,9 @@
       "build-options": {
         "env": {
           "CARGO_HOME": "/run/build/gyroflow/cargo",
-          "RUST_BACKTRACE": "1"
+          "RUST_BACKTRACE": "1",
+          "OPENCV_LINK_PATHS": "/app/lib",
+          "OPENCV_LINK_LIBS": "opencv_core,opencv_imgproc,opencv_imgcodecs,opencv_videoio,opencv_video,opencv_highgui,opencv_plot,opencv_tracking"
         }
       },
       "build-commands": [
