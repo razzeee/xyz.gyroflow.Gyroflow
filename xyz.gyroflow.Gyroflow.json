@@ -28,9 +28,7 @@
     "append-path": "/usr/lib/sdk/rust-stable/bin",
     "prepend-path": "/usr/lib/sdk/llvm14/bin",
     "prepend-ld-library-path": "/usr/lib/sdk/llvm14/lib",
-    "build-args": [
-      "--share=network"
-    ]
+    "build-args": ["--share=network"]
   },
   "modules": [
     {
@@ -100,9 +98,7 @@
         "-DBUILD_opencv_xobjdetect=OFF",
         "-DBUILD_opencv_xphoto=OFF"
       ],
-      "cleanup": [
-        "/bin"
-      ],
+      "cleanup": ["/bin"],
       "sources": [
         {
           "type": "archive",
@@ -137,7 +133,8 @@
       ],
       "build-options": {
         "env": {
-          "CARGO_HOME": "/run/build/gyroflow/cargo"
+          "CARGO_HOME": "/run/build/gyroflow/cargo",
+          "RUST_BACKTRACE": "1"
         }
       },
       "build-commands": [
