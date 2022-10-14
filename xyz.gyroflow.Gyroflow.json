@@ -129,6 +129,10 @@
           "type": "file",
           "path": "icon.png"
         },
+        {
+          "type": "file",
+          "path": "Cargo.lock"
+        },
         "cargo-sources2.json"
       ],
       "build-options": {
